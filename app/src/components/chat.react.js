@@ -96,25 +96,22 @@ class Chat extends Component {
 		});
 
 		return (
-			<div>
-				<div className="chat">
-				  <div className="chat-title">
-				    <h1>Fabio Ottaviani</h1>
-				    <h2>Supah</h2>
-				    <figure className="avatar">
-				      <img src="http://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80_4.jpg" /></figure>
-				  </div>
-				  <div className="messages">
-				    <div className="messages-content">
-				    	{messageGroup}
-				    </div>
-				  </div>
-				  <form className="message-box" onSubmit={this.sendMessage}>
-				    <textarea type="text" className="message-input" placeholder="Type message..." value={msgBuffer} onChange={this.onMsgChange} onKeyDown={this.onMsgKeyDown} />
-				    <button type="submit" className="message-submit">Send</button>
-				  </form>
-				</div>
-				<div className="bg"></div>
+			<div className="chat">
+			  <div className="chat-title">
+			    <h1>Fabio Ottaviani</h1>
+			    <h2>Supah</h2>
+			    <figure className="avatar">
+			      <img src="http://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80_4.jpg" /></figure>
+			  </div>
+			  <div className="messages">
+			    <div className="messages-content">
+			    	{messageGroup}
+			    </div>
+			  </div>
+			  <form className="message-box" onSubmit={this.sendMessage}>
+			    <textarea type="text" className="message-input" placeholder="Type message..." value={msgBuffer} onChange={this.onMsgChange} onKeyDown={this.onMsgKeyDown} />
+			    <button type="submit" className="message-submit">Send</button>
+			  </form>
 			</div>
 		)
 	}

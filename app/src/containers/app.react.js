@@ -24,7 +24,7 @@ class App extends Component {
 
 	render() {
 		return (
-			<div className="container-fluid">
+			<div>
 				{this.renderChildren()}
 			</div>
 		);
@@ -32,7 +32,9 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+  	currentUser: state.currentUser
+  }
 }
 
 export default connect(mapStateToProps)(App);

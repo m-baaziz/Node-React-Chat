@@ -58,7 +58,13 @@ app.use(express.static(__dirname + "/app/dist"))
 const server = app.listen(8080);
 const io = require('socket.io').listen(server);
 
+let users = {};
+
 io.sockets.on('connection', (socket) => {
+	socket.on('user', (name) => {
+		sockets[name] = socket;
+		console.log("NEW USER : " + name);
+	});
 	socket.on('message', (msg) => {
 		socket.broadcast.emit('message', msg);
 	});

@@ -1,4 +1,4 @@
-import {ActionTypes} from '../constants/Constants';
+import {ActionTypes} from '../constants/constants';
 
 function currentUser(state = {}, action) {
 	switch (action.type) {

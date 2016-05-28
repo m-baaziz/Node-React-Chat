@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 
 import Routes from './utils/routes.react';
 import reducer from './reducers/index';
-import socketMiddleWare from './middlewares/socket';
+import socketMiddleWare from './middlewares/socket-middleware';
 
 
 
