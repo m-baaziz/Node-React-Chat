@@ -1,15 +1,20 @@
 import {ActionTypes} from '../constants/constants';
-import { sendUser } from './socket-actions';
 
 module.exports = {
-	setCurrentUser: (name) => {
-		return (dispatch) => {
-			dispatch(sendUser(name));
-			const payload = {
-				type: ActionTypes.SET_CURRENT_USER,
-				name
-			};
-			dispatch(payload);
+	setCurrentUser: (id, name, color) => {
+		return {
+			type: ActionTypes.SET_CURRENT_USER,
+			id,
+			name,
+			color
+		};
+	},
+	addUser: (id, name, color) => {
+		return {
+			type: ActionTypes.ADD_USER,
+			id,
+			name,
+			color
 		}
-	}
+	}	
 }

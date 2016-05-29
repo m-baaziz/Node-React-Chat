@@ -9,14 +9,11 @@ import { Provider } from 'react-redux'
 
 import Routes from './utils/routes.react';
 import reducer from './reducers/index';
-import socketMiddleWare from './middlewares/socket-middleware';
-
-
 
 const store = createStore(
   reducer,
   compose(
-    applyMiddleware(thunk, socketMiddleWare)
+    applyMiddleware(thunk)
   )
 );
 

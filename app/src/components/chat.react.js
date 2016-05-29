@@ -42,9 +42,8 @@ class Chat extends Component {
 	onMsgChange(e) {
 		const { messages } = this.state;
 		const { value } = e.target;
-		if (!_.find(messages, msg => {return msg.type == "loading"})) {
-			this.props.sendMessage({type: "loading", content: null});
-		} else if (_.isEmpty(value)) {
+		this.props.sendMessage({type: "loading", content: null});
+		if (_.isEmpty(value)) {
 			this.removeLocalMessage((msg) => {return msg.type != "loading"});
 			this.props.sendMessage({type: "unloading", content: null});
 		}

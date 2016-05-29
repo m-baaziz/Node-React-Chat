@@ -1,14 +1,16 @@
 import {ActionTypes} from '../constants/constants';
 
-function currentUser(state = {}, action) {
+function users(state = [], action) {
 	switch (action.type) {
-		case ActionTypes.SET_CURRENT_USER :
+		case ActionTypes.ADD_USER :
 			const { id, name, color } = action;
 			const user = {id, name, color};
-			return user;
+			let newState = state.slice();
+			newState.push(user);
+			return newState;
 		default :
 			return state;
 	}
 }
 
-export default currentUser;
+export default users;

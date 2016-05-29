@@ -10,6 +10,8 @@ import thunk from 'redux-thunk';
 import Promise from 'bluebird';
 import _ from 'lodash';
 
+import User from './app/model/user';
+
 import Routes from './app/src/utils/routes.react.js';
 import reducer from './app/src/reducers/index';
 
@@ -58,15 +60,22 @@ app.use(express.static(__dirname + "/app/dist"))
 const server = app.listen(8080);
 const io = require('socket.io').listen(server);
 
-let users = {};
+let users = [];
 
 io.sockets.on('connection', (socket) => {
-	socket.on('user', (name) => {
-		sockets[name] = socket;
-		console.log("NEW USER : " + name);
+	socket.on('userHandshake', name => {
+		const newUser = new User(name, socket.id);
+		users.push(newUser);
+		const onlineUsers = _.filter(users, user => {return user.id != socket.id});
+		const onlineUsersJsons = _.map(onlineUsers, user => {return user.toJson()});
+		socket.emit('serverHandshake', { id: newUser.id, name: newUser.name, color: newUser.color, onlineUsers: onlineUsersJsons });
+		socket.broadcast.emit('newUserConnection', newUser.toJson());
 	});
-	socket.on('message', (msg) => {
+	socket.on('message', msg => {
 		socket.broadcast.emit('message', msg);
+	});
+	socket.on('disconnect', () => {
+		if (users[socket.id]) delete users[socket.id];
 	});
 });
 		

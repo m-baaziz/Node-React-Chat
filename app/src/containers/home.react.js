@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { sendMessage } from '../actions/socket-actions';
-import { setCurrentUser } from '../actions/users-actions';
-
 import Chat from '../components/chat.react';
-import TextInput from '../components/text-input.react';
-
-const NAME_REGEXP = /^[A-Za-z\-\_0-9]+[A-Za-z \-\_0-9]*[A-Za-z\-\_0-9]+$/ ;
 
 class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.receiveMessage = this.receiveMessage.bind(this);
 		this.sendMessage = this.sendMessage.bind(this);
-		this.onNameSubmit = this.onNameSubmit.bind(this);
-		this.onNameError = this.onNameError.bind(this);
-		this.state = {newMessage: null, externalMessageLoading: false, showChat: false, nameErrors: []}
+		this.state = { newMessage: null, externalMessageLoading: false, showChat: true };
 	}
 
 	componentDidMount() {
@@ -43,55 +35,15 @@ class Home extends Component {
 	}
 
 	sendMessage(msg) {
-		this.props.dispatch(sendMessage(msg));
-	}
-
-	onNameSubmit(name) {
-		this.props.dispatch(setCurrentUser(name));
-		this.setState({showChat: true});
-	}
-
-	checkName(name) {
-		let errors = [];
-		if (name.length < 5) {
-			errors.push("Your name should have at least 5 characters");
-			return errors;
-		}
-		if (name.length > 12) errors.push("Your name can't have more than 12 characters");
-		if (!name.match(NAME_REGEXP)) errors.push("Invalid character sequence");
-		return errors;
-	}
-
-	onNameError(errors) {
-		this.setState({nameErrors: errors});
+		this.props.socket.emit('message', msg);
 	}
 
 	render() {
-		const { newMessage, externalMessageLoading, nameErrors, showChat } = this.state;
-
-		const buildNewUserForm = () => {
-			const liGroup = _.map(nameErrors, (error, index) => {
-				return <li key={index}> {error} </li>
-			});
-			const errosDiv = (<div className='alert alert-danger'> <ul> {liGroup} </ul> </div>);
-			return (
-				<div className='userNameForm'>
-					{_.isEmpty(nameErrors) ? null : errosDiv}
-					<TextInput className='form-control' placeholder='Enter your name ...' onSubmit={this.onNameSubmit} check={this.checkName} onErrorOnSubmit={this.onNameError} />
-				</div>)
-		}
-
-		const chatScreen = (
-			<div>
-				
-				{showChat ? <Chat sendMessage={this.sendMessage} newMessage={newMessage} externalMessageLoading={externalMessageLoading} /> : null}
-			</div>)
-
+		const { newMessage, externalMessageLoading, showChat } = this.state;
+		console.log(this.props.users);
 		return (
 			<div>
-				{ _.isEmpty(this.props.currentUser) ? 
-					buildNewUserForm()
-					: chatScreen }
+				{showChat ? <Chat sendMessage={this.sendMessage} newMessage={newMessage} externalMessageLoading={externalMessageLoading} /> : null}
 			</div>
 		)
 	}
@@ -99,7 +51,7 @@ class Home extends Component {
 
 const mapStateToProps = (state) => {
   return {
-  	currentUser: state.currentUser
+  	users: state.users
   }
 }
 
