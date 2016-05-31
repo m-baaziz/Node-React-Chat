@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { setCurrentUser, addUser } from '../actions/users-actions';
+import { setCurrentUser, addUser, removeUser } from '../actions/users-actions';
 
 import TextInput from '../components/text-input.react';
 
@@ -34,10 +34,13 @@ class App extends Component {
 				})
 			}
 		});
-		this.socket.on('newUserConnection', user => {
+		this.socket.on('userConnection', user => {
 			const { id, name, color} = user;
 			dispatch(addUser(id, name, color));
 		});
+		this.socket.on('userDisconnection', id => {
+			dispatch(removeUser(id));
+		})
 	}
 
 	onNameSubmit(name) {
@@ -77,7 +80,7 @@ class App extends Component {
 			});
 			const errosDiv = (<div className='alert alert-danger'> <ul> {liGroup} </ul> </div>);
 			return (
-				<div className='userNameForm'>
+				<div className='user-name-form'>
 					{_.isEmpty(nameErrors) ? null : errosDiv}
 					<TextInput className='form-control' placeholder='Enter your name ...' onSubmit={this.onNameSubmit} check={this.checkName} onErrorOnSubmit={this.onNameError} />
 				</div>)

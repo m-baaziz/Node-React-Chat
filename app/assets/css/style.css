@@ -1,9 +1,24 @@
-.userNameForm {
+.user-name-form {
 	margin: 0 auto;
 	margin-top: 20%;
 	width: 300px;
 }
-
-.users-list {
+.users-list {
 	display: inline-block;
+	margin-top: 150px;
+	margin-left: 60px;
+}
+.users-item button {
+	width: 150px;
+	text-align: center;
+	color: #ffffff;
+	background-color: #424242;
+}
+.users-item button:hover {
+	color: #ffffff;
+	background-color: #282828;
+}
+.users-item button:focus {
+	color: #ffffff;
+	background-color: #282828;
 }

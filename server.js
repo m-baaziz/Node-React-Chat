@@ -69,13 +69,19 @@ io.sockets.on('connection', (socket) => {
 		const onlineUsers = _.filter(users, user => {return user.id != socket.id});
 		const onlineUsersJsons = _.map(onlineUsers, user => {return user.toJson()});
 		socket.emit('serverHandshake', { id: newUser.id, name: newUser.name, color: newUser.color, onlineUsers: onlineUsersJsons });
-		socket.broadcast.emit('newUserConnection', newUser.toJson());
+		socket.broadcast.emit('userConnection', newUser.toJson());
 	});
 	socket.on('message', msg => {
-		socket.broadcast.emit('message', msg);
+		try {
+			const { receiver } = msg;
+			io.sockets.to(receiver.id).emit('message', msg);
+		} catch (e) {
+			console.log(e);
+		}
 	});
 	socket.on('disconnect', () => {
-		if (users[socket.id]) delete users[socket.id];
+		socket.broadcast.emit('userDisconnection', socket.id);
+		_.remove(users, u => {return u.id == socket.id});
 	});
 });
 		

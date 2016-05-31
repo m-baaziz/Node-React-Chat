@@ -16,5 +16,11 @@ module.exports = {
 			name,
 			color
 		}
-	}	
+	},
+	removeUser: (id) => {
+		return {
+			type: ActionTypes.REMOVE_USER,
+			id
+		}
+	}
 }

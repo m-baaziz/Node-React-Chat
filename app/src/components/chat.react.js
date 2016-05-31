@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 import _ from 'lodash';
 
 class Chat extends Component {
@@ -9,43 +8,43 @@ class Chat extends Component {
 		this.sendMessage = this.sendMessage.bind(this);
 		this.onMsgChange = this.onMsgChange.bind(this);
 		this.onMsgKeyDown = this.onMsgKeyDown.bind(this);
-		this.addLocalMessage = this.addLocalMessage.bind(this);
-		this.removeLocalMessage = this.removeLocalMessage.bind(this);
-		this.state = {msgBuffer: null, messages: []};   // message : {state: "local"/"external"/"loading" content: "azerty"/null, moment: "hh:mm"}
+		//this.addLocalMessage = this.addLocalMessage.bind(this);
+		this.state = {msgBuffer: null};   // message : {state: "local"/"external"/"loading", sender: "senderID", content: "azerty"/null, moment: "hh:mm"}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		const { newMessage, externalMessageLoading } = nextProps;
-		if (this.props.newMessage != newMessage) {
-			this.addLocalMessage({type: "external", content: newMessage.content, moment: newMessage.moment});
-		}
-		if (!this.props.externalMessageLoading && externalMessageLoading) {
-			this.addLocalMessage({type: "loading", content: null});
-		}
-		if (this.props.externalMessageLoading && !externalMessageLoading) {
-			this.removeLocalMessage((msg) => {return msg.type != "loading"});
-		}
-	}
+	// componentWillReceiveProps(nextProps) {
+	// 	const { newMessage, externalMessageLoading } = nextProps;
+	// 	if (this.props.newMessage != newMessage) {
+	// 		this.addLocalMessage({type: "external", content: newMessage.content, moment: newMessage.moment});
+	// 	}
+	// 	if (!this.props.externalMessageLoading && externalMessageLoading) {
+	// 		this.addLocalMessage({type: "loading", content: null});
+	// 	}
+	// 	if (this.props.externalMessageLoading && !externalMessageLoading) {
+	// 		this.removeLocalMessage((msg) => {return msg.type != "loading"});
+	// 	}
+	// }
 
-	addLocalMessage(msg) {
-		let { messages } = this.state;
-		messages.push(msg);
-		this.setState({messages});
-	}
+	// addLocalMessage(msg) {
+	// 	let { messages } = this.state;
+	// 	messages.push(msg);
+	// 	this.setState({messages});
+	// }
 
-	removeLocalMessage(conditionCb) {
-		let { messages } = this.state;
-		messages = _.filter(messages, msg => {return conditionCb(msg)});
-		this.setState({messages});
-	}
+	// removeLocalMessage(conditionCb) {
+	// 	let { messages } = this.state;
+	// 	messages = _.filter(messages, msg => {return conditionCb(msg)});
+	// 	this.setState({messages});
+	// }
 
 	onMsgChange(e) {
 		const { messages } = this.state;
 		const { value } = e.target;
-		this.props.sendMessage({type: "loading", content: null});
+		const { sendMessage } = this.props;
 		if (_.isEmpty(value)) {
-			this.removeLocalMessage((msg) => {return msg.type != "loading"});
-			this.props.sendMessage({type: "unloading", content: null});
+			sendMessage({state: "canceled", body: null});
+		} else {
+			sendMessage({state: "loading", body: null});
 		}
 		this.setState({msgBuffer: value});
 	}
@@ -59,8 +58,8 @@ class Chat extends Component {
 	sendMessage(e) {
 		const { msgBuffer } = this.state;
 		if (!_.isEmpty(msgBuffer)) {
-			this.addLocalMessage({type: "local", content: msgBuffer, moment: moment().format('hh:mm')});
-			this.props.sendMessage({type: "ready", content: msgBuffer, moment: moment().format('hh:mm')});
+			//this.addLocalMessage({type: "local", content: msgBuffer, moment: moment().format('hh:mm')});
+			this.props.sendMessage({state: "ready", body: msgBuffer});
 			this.setState({msgBuffer: ""});
 		}
 		e.preventDefault();
@@ -68,37 +67,40 @@ class Chat extends Component {
 
 	render() {
 
-		const { messages, msgBuffer } = this.state;
-
+		const { msgBuffer } = this.state;
+		const { messages, emitterId, interlocutors } = this.props;
+		const time = msg => {return `${msg.hour}:${msg.minute}`} ;
 		const messageGroup = _.map(messages, (msg, index) => {
-			switch (msg.type) {
-				case "local" :
-					return <div key={index} className='message message-personal'> { msg.content } <div className="timestamp"> { msg.moment } </div> </div>;
-				case "external" :
-					return (
-						<div key={index} className='message new'>
-							<figure className="avatar"><img src="http://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80_4.jpg" /></figure>
-							{ msg.content }
-							<div className="timestamp"> { msg.moment } </div>
-						</div>
-						);
-				case "loading" :
+			if (msg.emitter.id != emitterId)
+				if (msg.state == 'loading') {
 					return (
 						<div key={index} className="message loading new">
 							<figure className="avatar"><img src="http://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80_4.jpg" /></figure>
 							<span></span>
+						</div>)
+				} else {
+					return (
+						<div key={index} className='message new'>
+							<figure className="avatar"><img src="http://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80_4.jpg" /></figure>
+							{ msg.body }
+							<div className="timestamp"> {time(msg)} </div>
+						</div>);
+				}
+
+			if (msg.emitter.id == emitterId && msg.state != "loading")
+				return (
+					<div key={index} className='message message-personal'> { msg.body } 
+						<div className="timestamp">
+							{time(msg)}
 						</div>
-					);
-				default :
-					return null;
-			}
+					</div>)
 		});
 
 		return (
 			<div className="chat">
 			  <div className="chat-title">
-			    <h1>Fabio Ottaviani</h1>
-			    <h2>Supah</h2>
+			    <h1>{ _.map(interlocutors, interlocutor => {return interlocutor.name}) }</h1>
+			    <h2>{ _.map(interlocutors, interlocutor => {return interlocutor.color}) }</h2>
 			    <figure className="avatar">
 			      <img src="http://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80_4.jpg" /></figure>
 			  </div>
