@@ -21,6 +21,11 @@ class Chat extends Component {
 			}, 0);
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (_.xor(nextProps.interlocutors, this.props.interlocutors).length > 0 && this.refs.chatTextArea)
+			this.refs.chatTextArea.focus();
+	}
+
 	onMsgChange(e) {
 		const { messages } = this.state;
 		const { value } = e.target;
@@ -101,7 +106,7 @@ class Chat extends Component {
 			    </div>
 			  </div>
 			  <form className="message-box" onSubmit={this.sendMessage}>
-			    <textarea type="text" className="message-input" placeholder="Type message..." value={msgBuffer} onChange={this.onMsgChange} onKeyDown={this.onMsgKeyDown} />
+			    <textarea type="text" className="message-input" placeholder="Type message..." ref="chatTextArea" autoFocus value={msgBuffer} onChange={this.onMsgChange} onKeyDown={this.onMsgKeyDown} />
 			    <button type="submit" className="message-submit">Send</button>
 			  </form>
 			</div>

@@ -72,7 +72,7 @@ class Home extends Component {
 		messages = _.orderBy(messages, ['year', 'month', 'day', 'hour', 'minute', 'second'], ['asc', 'asc', 'asc', 'asc', 'asc', 'asc']);
 
 		const usersIdSendingMessage = _.map(_.filter(conversations, conver => {
-			return conver.receiver.id == currentUser.id && _.last(conver.messages).state == 'loading';
+			return conver.receiver.id == currentUser.id && conver.messages.length > 0 && _.last(conver.messages).state == 'loading';
 		}), conversation => {return conversation.emitter.id});
 
 		return (
