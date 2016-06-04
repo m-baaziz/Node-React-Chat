@@ -8,34 +8,8 @@ class Chat extends Component {
 		this.sendMessage = this.sendMessage.bind(this);
 		this.onMsgChange = this.onMsgChange.bind(this);
 		this.onMsgKeyDown = this.onMsgKeyDown.bind(this);
-		//this.addLocalMessage = this.addLocalMessage.bind(this);
-		this.state = {msgBuffer: null};   // message : {state: "local"/"external"/"loading", sender: "senderID", content: "azerty"/null, moment: "hh:mm"}
+		this.state = {msgBuffer: null};
 	}
-
-	// componentWillReceiveProps(nextProps) {
-	// 	const { newMessage, externalMessageLoading } = nextProps;
-	// 	if (this.props.newMessage != newMessage) {
-	// 		this.addLocalMessage({type: "external", content: newMessage.content, moment: newMessage.moment});
-	// 	}
-	// 	if (!this.props.externalMessageLoading && externalMessageLoading) {
-	// 		this.addLocalMessage({type: "loading", content: null});
-	// 	}
-	// 	if (this.props.externalMessageLoading && !externalMessageLoading) {
-	// 		this.removeLocalMessage((msg) => {return msg.type != "loading"});
-	// 	}
-	// }
-
-	// addLocalMessage(msg) {
-	// 	let { messages } = this.state;
-	// 	messages.push(msg);
-	// 	this.setState({messages});
-	// }
-
-	// removeLocalMessage(conditionCb) {
-	// 	let { messages } = this.state;
-	// 	messages = _.filter(messages, msg => {return conditionCb(msg)});
-	// 	this.setState({messages});
-	// }
 
 	onMsgChange(e) {
 		const { messages } = this.state;
@@ -58,7 +32,6 @@ class Chat extends Component {
 	sendMessage(e) {
 		const { msgBuffer } = this.state;
 		if (!_.isEmpty(msgBuffer)) {
-			//this.addLocalMessage({type: "local", content: msgBuffer, moment: moment().format('hh:mm')});
 			this.props.sendMessage({state: "ready", body: msgBuffer});
 			this.setState({msgBuffer: ""});
 		}

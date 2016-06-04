@@ -22,3 +22,12 @@
 	color: #ffffff;
 	background-color: #282828;
 }
+.user-name-form input {
+	border-color: black;
+}
+.glyphicon-warning-sign {
+	color: #f0ad4e;
+}
+.glyphicon-ok {
+	color: #5cb85c;
+}
