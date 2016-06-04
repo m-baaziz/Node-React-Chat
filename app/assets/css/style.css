@@ -25,23 +25,44 @@ body {
 	width: 300px;
 }
 .users-list {
+	background-color: #080f19;
 	display: inline-block;
 	margin-top: 150px;
 	margin-left: 60px;
+	padding: 0;
+	border-style: none;
 }
-.users-item button {
-	width: 150px;
+.users-list .panel-heading {
+	background-color: transparent;
+	border-style: none;
+	margin: 0;
+}
+.users-list .panel-body {
+	border-style: none;
+	background-color: transparent;
+	padding: 0;
+	margin: 0;
+}
+.users-list .panel-body ul {
+	margin : 0;
+}
+.users-list input {
+	background-color: transparent;
+  border-style: none;
+}
+.users-item, .no-users {
 	text-align: center;
+	background-color: #080f19;
 	color: #ffffff;
-	background-color: #424242;
+	border-style: none;
+	border-top: 1px solid black;
 }
-.users-item button:hover {
-	color: #ffffff;
-	background-color: #282828;
+.users-item:first-child {
+	border-style: none;
 }
-.users-item button:focus {
-	color: #ffffff;
-	background-color: #282828;
+.users-item:hover {
+	color: #66afe9;
+	cursor: pointer;
 }
 .user-name-form input {
 	background-color: rgba(0, 0, 0, 0.48);

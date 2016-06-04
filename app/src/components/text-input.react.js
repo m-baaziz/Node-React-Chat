@@ -31,7 +31,7 @@ class TextInput extends Component {
 
 	render() {
 		const { value, isValid } = this.state;
-		const { className, onSubmit, placeholder } = this.props;
+		const { className, onSubmit, placeholder, ref, autoFocus } = this.props;
 		const getFeedbackClass = () => {
 			if (_.isEmpty(value)) return "glyphicon glyphicon-pencil form-control-feedback";
 			return isValid ? "glyphicon glyphicon-ok form-control-feedback" : "glyphicon glyphicon-warning-sign form-control-feedback";
@@ -39,7 +39,7 @@ class TextInput extends Component {
 
 		return (
 			<form className="form-group has-feedback" onSubmit={onSubmit ? this.onSubmit : null}>
-				<input className={className ? className : null} type='text' placeholder={placeholder} value={value} onChange={this.onChange} />
+				<input className={className ? className : null} ref={ref} autoFocus={autoFocus} type='text' placeholder={placeholder} value={value} onChange={this.onChange} />
 				<span className={getFeedbackClass()} ariaHidden="true"></span>
 			</form>)
 	}

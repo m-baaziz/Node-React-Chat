@@ -82,7 +82,7 @@ class App extends Component {
 			return (
 				<div className='user-name-form'>
 					{_.isEmpty(nameErrors) ? null : errosDiv}
-					<TextInput className='form-control' placeholder='Enter your name ...' onSubmit={this.onNameSubmit} check={this.checkName} onErrorOnSubmit={this.onNameError} />
+					<TextInput className='form-control' autoFocus={true} placeholder='Enter your name ...' onSubmit={this.onNameSubmit} check={this.checkName} onErrorOnSubmit={this.onNameError} />
 				</div>)
 		}
 
