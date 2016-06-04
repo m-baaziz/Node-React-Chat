@@ -21,6 +21,10 @@ class App extends Component {
 
 	static fetchData({ store, query }) {}
 
+	goToHome() {
+		window.location.href = "/";
+	}
+
 	componentDidMount() {
 		const { dispatch } = this.props;
 		this.socket = io();
@@ -88,6 +92,11 @@ class App extends Component {
 
 		return (
 			<div>
+			<nav id="title-header" className="navbar navbar-default navbar-static-top">
+			  <div onClick={this.goToHome} >
+			    Tchiky Chat
+			  </div>
+			</nav>
 				{ _.isEmpty(this.props.currentUser) ? buildNewUserForm() : this.renderChildren() }
 			</div>
 		);

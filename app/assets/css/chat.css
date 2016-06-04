@@ -36,13 +36,12 @@
   z-index: 2;
   background: rgba(0, 0, 0, 0.2);
   color: #fff;
-  text-transform: uppercase;
   text-align: left;
   padding: 10px 10px 10px 50px;
 }
 .chat-title h1, .chat-title h2 {
   font-weight: normal;
-  font-size: 10px;
+  font-size: 13px;
   margin: 0;
   padding: 0;
 }
@@ -95,12 +94,14 @@
   position: relative;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
-.messages .message .timestamp {
+.messages .message .left-timestamp, .messages .message .right-timestamp {
   position: absolute;
   bottom: -15px;
-  right: 0px;
   font-size: 9px;
   color: rgba(255, 255, 255, 0.3);
+}
+.messages .message .right-timestamp {
+  right: 0;
 }
 .messages .message::before {
   content: '';

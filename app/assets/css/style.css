@@ -19,6 +19,23 @@ body {
   overflow: hidden;
 }
 
+#title-header {
+	font-size: 30px;
+	font-family: 'Great Vibes', Helvetica, sans-serif;
+	color: #ffefef;
+	background-color: black;
+  border-style: none;
+}
+
+#title-header div {
+	display: inline-block;
+	padding: 10px 10px 10px 15px;
+	margin-left: 0px;
+}
+#title-header div:hover {
+	cursor: pointer;
+}
+
 .user-name-form {
 	margin: 0 auto;
 	margin-top: 20%;

@@ -85,7 +85,6 @@ class Chat extends Component {
 				<div key={index}>
 					<LetterIcon className="pull-left" color={interlocutor.color} letter={interlocutor.name[0]} />
 					<h1> { interlocutor.name } </h1>
-					<h2> { interlocutor.color } </h2>
 				</div>)
 		})
 		return (
