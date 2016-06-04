@@ -1,10 +1,10 @@
 .chat {
   position: absolute;
   top: 50%;
-  left: 80%;
+  left: 70%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  width: 300px;
+  width: 500px;
   height: 80vh;
   max-height: 500px;
   z-index: 2;
@@ -241,7 +241,7 @@
   height: 17px;
   margin: 0;
   padding-right: 20px;
-  width: 265px;
+  width: 440px;
 }
 .message-box textarea:focus:-webkit-placeholder {
   color: transparent;
