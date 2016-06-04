@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+if (typeof window != 'undefined') { var ScrollArea = require('react-scrollbar') };
 import _ from 'lodash';
+
+import LetterIcon from './letter-icon.react';
 
 class Chat extends Component {
 
@@ -9,6 +12,13 @@ class Chat extends Component {
 		this.onMsgChange = this.onMsgChange.bind(this);
 		this.onMsgKeyDown = this.onMsgKeyDown.bind(this);
 		this.state = {msgBuffer: null};
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.refs.scrollBar)
+			setTimeout(() => {
+				this.refs.scrollBar.scrollBottom();
+			}, 0);
 	}
 
 	onMsgChange(e) {
@@ -39,7 +49,6 @@ class Chat extends Component {
 	}
 
 	render() {
-
 		const { msgBuffer } = this.state;
 		const { messages, emitterId, interlocutors } = this.props;
 		const time = msg => {return `${msg.hour}:${msg.minute}`} ;
@@ -48,13 +57,13 @@ class Chat extends Component {
 				if (msg.state == 'loading') {
 					return (
 						<div key={index} className="message loading new">
-							<figure className="avatar"><img src="http://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80_4.jpg" /></figure>
+							<LetterIcon className="pull-left" color={msg.emitter.color} letter={msg.emitter.name[0]} />
 							<span></span>
 						</div>)
 				} else {
 					return (
 						<div key={index} className='message new'>
-							<figure className="avatar"><img src="http://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80_4.jpg" /></figure>
+							<LetterIcon className="pull-left" color={msg.emitter.color} letter={msg.emitter.name[0]} />
 							{ msg.body }
 							<div className="timestamp"> {time(msg)} </div>
 						</div>);
@@ -69,17 +78,25 @@ class Chat extends Component {
 					</div>)
 		});
 
+		const head = _.map(interlocutors, (interlocutor, index) => {
+			return (
+				<div key={index}>
+					<LetterIcon className="pull-left" color={interlocutor.color} letter={interlocutor.name[0]} />
+					<h1> { interlocutor.name } </h1>
+					<h2> { interlocutor.color } </h2>
+				</div>)
+		})
 		return (
 			<div className="chat">
 			  <div className="chat-title">
-			    <h1>{ _.map(interlocutors, interlocutor => {return interlocutor.name}) }</h1>
-			    <h2>{ _.map(interlocutors, interlocutor => {return interlocutor.color}) }</h2>
-			    <figure className="avatar">
-			      <img src="http://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80_4.jpg" /></figure>
+			  	{ head }
 			  </div>
-			  <div className="messages">
+			  <div className="messages" ref='messages'>
 			    <div className="messages-content">
-			    	{messageGroup}
+			    	{ typeof window == 'undefined' ? messageGroup : (
+			    		<ScrollArea ref='scrollBar' style={{height: this.refs.messages ? this.refs.messages.offsetHeight : '100%'}}>
+			    			{messageGroup}
+			    		</ScrollArea> ) }
 			    </div>
 			  </div>
 			  <form className="message-box" onSubmit={this.sendMessage}>

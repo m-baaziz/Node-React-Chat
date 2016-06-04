@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 
+import LetterIcon from './letter-icon.react';
+
 class UsersList extends Component {
 
 	constructor(props) {
@@ -37,7 +39,11 @@ class UsersList extends Component {
 	render() {
 		const { search, users } = this.state;
 		const listGroup = _.map(users, (user, index) => {
-			return <li key={index} value={index} onClick={this.onClick} className="list-group-item users-item"> {user.name} </li>
+			return (
+				<li key={index} value={index} onClick={this.onClick} className="list-group-item users-item">
+					<LetterIcon className="pull-left" color={user.color} letter={user.name[0]} />
+					{user.name} 
+				</li>);
 		})
 		const noUsers = <li className="list-group-item no-users"> No users </li>
 		return (
