@@ -98,6 +98,7 @@
 .messages .message .timestamp {
   position: absolute;
   bottom: -15px;
+  right: 0px;
   font-size: 9px;
   color: rgba(255, 255, 255, 0.3);
 }

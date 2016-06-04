@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+if (typeof window != 'undefined') { var ScrollArea = require('react-scrollbar') };
 import _ from 'lodash';
 
 import LetterIcon from './letter-icon.react';
@@ -42,19 +43,26 @@ class UsersList extends Component {
 			return (
 				<li key={index} value={index} onClick={this.onClick} className="list-group-item users-item">
 					<LetterIcon className="pull-left" color={user.color} letter={user.name[0]} />
-					{user.name} 
+					<span className="user-name"> {user.name} </span>
 				</li>);
 		})
 		const noUsers = <li className="list-group-item no-users"> No users </li>
+		const ulGroup = ( <ul className="list-group">
+												{ _.isEmpty(listGroup) ? noUsers : listGroup }
+											</ul> );
+
 		return (
-			<div className="panel panel-default users-list">
+			<div className="panel panel-default users-list" ref="usersList">
 				<div className="panel-heading">
 					<input type='text' className="form-control" placeholder="Search users ..." value={search} onChange={this.onSearchBarChange} />
 				</div>
 				<div className="panel-body">
-					<ul className="list-group">
-						{ _.isEmpty(listGroup) ? noUsers : listGroup }
-					</ul>
+					{ 
+						typeof window == 'undefined' ? ulGroup : (
+			    		<ScrollArea style={{maxHeight: '350px'}}>
+			    			{ ulGroup }
+			    		</ScrollArea> ) 
+					}
 				</div>
 			</div>
 		)

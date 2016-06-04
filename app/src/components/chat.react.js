@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-if (typeof window != 'undefined') { var ScrollArea = require('react-scrollbar') };
+if (typeof window != 'undefined') { var ScrollArea = require('react-scrollbar') }; // conditional import because of the server-side rendering
 import _ from 'lodash';
 
 import LetterIcon from './letter-icon.react';
@@ -51,7 +51,9 @@ class Chat extends Component {
 	render() {
 		const { msgBuffer } = this.state;
 		const { messages, emitterId, interlocutors } = this.props;
-		const time = msg => {return `${msg.hour}:${msg.minute}`} ;
+
+		const time = msg => {return msg.moment.format("hh:mm")};
+
 		const messageGroup = _.map(messages, (msg, index) => {
 			if (msg.emitter.id != emitterId)
 				if (msg.state == 'loading') {

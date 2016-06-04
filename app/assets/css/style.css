@@ -67,11 +67,13 @@ body {
   border-style: none;
 }
 .users-item, .no-users {
-	text-align: center;
 	background-color: #080f19;
 	color: #f5f5f5;
 	border-style: none;
 	border-top: 1px solid black;
+}
+.no-users {
+	text-align: center;
 }
 .users-item:first-child {
 	border-style: none;
@@ -79,6 +81,9 @@ body {
 .users-item:hover {
 	color: #66afe9;
 	cursor: pointer;
+}
+.users-item .user-name {
+	margin-left: 10px;
 }
 
 .letter-icon {
