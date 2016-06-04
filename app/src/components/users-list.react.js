@@ -44,6 +44,7 @@ class UsersList extends Component {
 				<li key={index} value={index} onClick={this.onClick} className="list-group-item users-item">
 					<LetterIcon className="pull-left" color={user.color} letter={user.name[0]} />
 					<span className="user-name"> {user.name} </span>
+					{ _.includes(this.props.usersIdSendingMessage, user.id) ? <div className='user-msg-loading'> <span></span> </div> : null }
 				</li>);
 		})
 		const noUsers = <li className="list-group-item no-users"> No users </li>

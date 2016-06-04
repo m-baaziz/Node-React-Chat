@@ -67,14 +67,14 @@ class Chat extends Component {
 						<div key={index} className='message new'>
 							<LetterIcon className="pull-left" color={msg.emitter.color} letter={msg.emitter.name[0]} />
 							{ msg.body }
-							<div className="timestamp"> {time(msg)} </div>
+							<div className="left-timestamp"> {time(msg)} </div>
 						</div>);
 				}
 
 			if (msg.emitter.id == emitterId && msg.state != "loading")
 				return (
 					<div key={index} className='message message-personal'> { msg.body } 
-						<div className="timestamp">
+						<div className="right-timestamp">
 							{time(msg)}
 						</div>
 					</div>)

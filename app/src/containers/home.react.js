@@ -70,9 +70,14 @@ class Home extends Component {
 			return current;
 		}, []);
 		messages = _.orderBy(messages, ['year', 'month', 'day', 'hour', 'minute', 'second'], ['asc', 'asc', 'asc', 'asc', 'asc', 'asc']);
+
+		const usersIdSendingMessage = _.map(_.filter(conversations, conver => {
+			return conver.receiver.id == currentUser.id && _.last(conver.messages).state == 'loading';
+		}), conversation => {return conversation.emitter.id});
+
 		return (
 			<div>
-				<UsersList users={this.props.users} onClick={this.onUserClick} />
+				<UsersList users={this.props.users} usersIdSendingMessage={usersIdSendingMessage} onClick={this.onUserClick} />
 				{!_.isEmpty(currentInterlocutors) ? <Chat sendMessage={this.sendMessage} messages={messages} emitterId={currentUser.id} interlocutors={currentInterlocutors} /> : null}
 			</div>
 		)
