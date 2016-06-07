@@ -5,7 +5,7 @@ by Mohamed Baaziz
 
 This is simple chat application using : <br/><br/>
 **Server-side** : <br/>
-NodeJs, Socket.io (real-time communication), Express <br/> <br/>
+NodeJs, Socket.io (real-time communication), Express, Webpack <br/> <br/>
 **Client-side** : <br/>
 ReactJs, HTML5, CSS3, Bootsrap
 
