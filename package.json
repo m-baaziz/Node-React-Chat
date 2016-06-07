@@ -4,7 +4,7 @@
   "description": "A simple chat application",
   "main": "server.js",
   "scripts": {
-    "start": "webpack --progress --profile --colors"
+    "start": "webpack --progress --profile --colors & babel-node server.js"
   },
   "dependencies": {
     "babel-plugin-module-alias": "^1.2.0",
