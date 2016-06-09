@@ -1,4 +1,26 @@
-Tchiky Chat by Baaziz Mohamed
+# Tchiky Chat 
+by Mohamed Baaziz
 
-A simple chat application
-	
+## Overview
+
+This is simple chat application using : <br/><br/>
+**Server-side** : <br/>
+NodeJs, Socket.io (real-time communication), Express, Webpack <br/> <br/>
+**Client-side** : <br/>
+ReactJs, HTML5, CSS3, Bootsrap
+
+## Installation
+
+Using npm :
+
+`npm install`
+
+## Run
+
+Using npm :
+
+`npm start`
+
+Now open this URL in your browser :
+
+`http://localhost:8080`
