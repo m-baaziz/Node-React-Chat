@@ -1,0 +1,7 @@
+{
+    "uid": "app",
+    "append": true,
+    "watch": true,
+    "script": "build.js",
+    "sourceDir": "/home/user/tchiky-chat"
+}
