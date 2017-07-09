@@ -6,7 +6,7 @@ module.exports = {
   entry: [
     './app/src/root.js'
   ],
-  output: { path: __dirname, filename: './app/dist/bundle.js' },
+  output: { path: process.env['APP_PATH'], filename: './app/dist/bundle.js' },
   plugins: process.env.ENV == 'production' ? [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({

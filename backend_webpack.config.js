@@ -15,7 +15,7 @@ module.exports = {
   entry: './server.js',
   target: 'node',
   output: {
-    path: __dirname,
+    path: process.env['APP_PATH'],
     filename: 'build.js'
   },
   externals: nodeModules,

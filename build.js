@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__dirname) {'use strict';
+	/* WEBPACK VAR INJECTION */(function(process.env['APP_PATH']) {'use strict';
 
 	var _express = __webpack_require__(1);
 
@@ -98,10 +98,10 @@
 
 	var app = (0, _express2.default)();
 
-	app.set('views', __dirname + '/app/views');
+	app.set('views', process.env['APP_PATH'] + '/app/views');
 	app.set('view engine', 'ejs');
 	app.use((0, _morgan2.default)('combined'));
-	app.use(_express2.default.static(__dirname + "/app/dist")).use(_express2.default.static(__dirname + "/app/assets")).use((0, _serveFavicon2.default)(__dirname + '/app/assets/images/favicon.ico')).get('/*', function (req, res) {
+	app.use(_express2.default.static(process.env['APP_PATH'] + "/app/dist")).use(_express2.default.static(process.env['APP_PATH'] + "/app/assets")).use((0, _serveFavicon2.default)(process.env['APP_PATH'] + '/app/assets/images/favicon.ico')).get('/*', function (req, res) {
 
 		var history = (0, _reactRouter.createMemoryHistory)();
 		var store = (0, _redux.createStore)(_index2.default, (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default)));

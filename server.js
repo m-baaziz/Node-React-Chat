@@ -18,12 +18,12 @@ import reducer from './app/src/reducers/index';
 
 const app = express();
 
-app.set('views', __dirname + '/app/views');
+app.set('views', process.env['APP_PATH'] + '/app/views');
 app.set('view engine', 'ejs');
 app.use(morgan('combined'))
-app.use(express.static(__dirname + "/app/dist"))
-	.use(express.static( __dirname + "/app/assets"))
-	.use(favicon(__dirname + '/app/assets/images/favicon.ico'))
+app.use(express.static(process.env['APP_PATH'] + "/app/dist"))
+	.use(express.static( process.env['APP_PATH'] + "/app/assets"))
+	.use(favicon(process.env['APP_PATH'] + '/app/assets/images/favicon.ico'))
 	.get('/*', (req, res) => {
 
 		const history = createMemoryHistory();
