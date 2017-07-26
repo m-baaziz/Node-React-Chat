@@ -13,7 +13,4 @@ EXPOSE 8080
 ENV APP_PATH /app
 ENV ENV devlopment
 
-CMD webpack --config backend_webpack.config.js
-CMD webpack --config frontend_webpack.config.js
-
-CMD pm2 start --no-daemon build.js
+CMD webpack --config frontend_webpack.config.js && webpack --config backend_webpack.config.js && pm2 start --no-daemon build.js
