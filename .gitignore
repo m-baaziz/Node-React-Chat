@@ -4,3 +4,4 @@ app/dist/*
 */*/.DS_Store 
 */*/*/.DS_Store
 .tarignore
+node_modules
